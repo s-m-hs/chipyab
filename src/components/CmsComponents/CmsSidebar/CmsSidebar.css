@@ -1,0 +1,88 @@
+
+.cmssidebar-container{
+    position: relative;
+    background-color:var(--white1);
+    height: calc(100vh - 50px);
+    border-radius: 5px;
+    padding-right: 0.5cqi;
+}
+
+.cmssidebar-maindiv{
+    display: flex;
+    flex-direction: column;
+}
+.cmssidebar-h8{
+color:var( --gray1);
+}
+
+.cmssidebar-div {
+   
+    text-decoration: none;
+    margin-left: 10px;
+    padding: 2px;
+    color: var(--gray3);
+    cursor: pointer;
+    border-radius: 3px;
+    border: none;
+    background: none;
+}
+.cmssidebar-div:hover{
+background-color: var(--gray2);
+}
+
+.cmsheader-icon{
+    border: none;
+    background: none;
+}
+span{
+    margin-left: 2px;
+}
+.active{
+    background-color: var(--gray1);
+}
+.sidemenue{
+    background-color:var(--white1);
+    height: calc(100vh - 50px);
+    border-radius: 5px;
+    padding-right: 0.5cqi;
+    position: absolute;
+min-width: 150px;
+    top: 5px;
+    z-index: 10;
+opacity: 0.9;
+/* transition: all 5s linear; */
+animation: move 300ms 1 alternate ease-in-out;
+
+}
+.cmssidebar-maindivb{
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
+  @keyframes move {
+    0% {
+right: -200px;
+        /* opacity: 0; */
+    }
+
+    100% {
+        right: 0px;
+
+        /* opacity: 1; */
+    }
+}
+
+
+
+@media only screen and (max-width: 768px) {
+    .cmssidebar-maindiv{
+        display: none;
+    }
+    .cmssidebar-container{
+        background-color: inherit;
+    }
+
+}

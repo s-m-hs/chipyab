@@ -1,0 +1,22 @@
+@import './styles/CmsStyle.css';
+
+
+ *{
+    padding: 0 ;
+    margin: 0 ;
+    box-sizing: border-box ;
+ }
+
+
+.App {
+    min-height: 100vh;
+    box-sizing: border-box;
+    text-decoration: none;
+
+  
+}
+.a{
+    text-decoration: none;
+    color:inherit;
+    list-style: none;
+}

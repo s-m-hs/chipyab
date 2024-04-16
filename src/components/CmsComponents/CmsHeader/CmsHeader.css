@@ -1,0 +1,68 @@
+.cmsheader-container{
+    max-width: none !important;
+}
+.cmsheader-row {
+    display: flex;
+    align-items: center;
+
+}
+
+.cmsheader-col3 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+}
+
+.cmsheader-div {
+    display: flex;
+    position: relative;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.cmsheader-span {
+
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: red;
+    border-radius: 50%;
+    width: 9px;
+    height: 9px;
+    justify-content: center;
+    color: #ffff;
+    font-size: 6px;
+
+}
+
+.cmsheader-icon {
+    margin: 5px;
+    cursor: pointer;
+}
+.appbar-h1{
+    font-weight: bold;
+    font-family: BTitr;
+}
+.cmsheader-col1{
+    display: flex;
+    align-items: center;
+}
+.cmsheader-gridviewIcon{
+    color: var(--gray3);
+}
+.cmsheader-sidemenue-button{
+    margin: 5px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background-color: inherit;
+    display: none;
+}
+
+@media only screen and (max-width: 768px) {
+    .cmsheader-sidemenue-button{
+       display: inline;
+    }
+}
