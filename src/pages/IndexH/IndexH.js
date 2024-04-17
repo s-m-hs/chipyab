@@ -4,6 +4,6 @@ import { Link } from 'react-router-dom';
 
 export default function IndexH() {
   return (
-<Link to='/p-admin'>dsfdsf</Link>
+<Link to='/p-admin'>PanelAdmin</Link>
   )
 }

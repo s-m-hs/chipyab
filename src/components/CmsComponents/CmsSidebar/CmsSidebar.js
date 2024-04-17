@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { NavLink } from 'react-router-dom';
+import { NavLink,Link } from 'react-router-dom';
 import './CmsSidebar.css'
 import FenceIcon from '@mui/icons-material/Fence';
 import TimelineIcon from '@mui/icons-material/Timeline';
@@ -25,8 +25,8 @@ export default function CmsSidebar() {
         <div className='cmssidebar-container'>
             <div className="cmssidebar-maindiv">
                 <h8 className='cmssidebar-h8'>Dashboard</h8>
-                <NavLink className='cmssidebar-div ' to={'/p-admin'}>
-                    <FenceIcon /><span>خانه</span></NavLink>
+                <Link className='cmssidebar-div ' to={'/p-admin'}>
+                    <FenceIcon /><span>خانه</span></Link>
                 <div className='cmssidebar-div'> <TimelineIcon /><span>آنالیز</span> </div>
                 <div className='cmssidebar-div'><TrendingUpIcon /><span>فروش</span> </div>
                 <hr />
@@ -43,7 +43,11 @@ export default function CmsSidebar() {
                    <StorefrontIcon /> <span>محصولات</span> </NavLink>
 
                 <div className='cmssidebar-div'><PaidIcon /> <span>محصولات جدید</span> </div>
-                <div className='cmssidebar-div'><AssessmentIcon /> <span>گزارشات</span> </div>
+
+                <NavLink className='cmssidebar-div' to={'menu'}> 
+                <AssessmentIcon /> <span>دسته بندی</span>
+                </NavLink>
+
                 <hr />
                 <h8 className='cmssidebar-h8'>Notifications</h8>
                 <div className='cmssidebar-div'><EmailOutlinedIcon /><span>ایمیل</span> </div>

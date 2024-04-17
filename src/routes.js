@@ -2,6 +2,7 @@
 import IndexH from './pages/IndexH/IndexH'
 import CmsIndex from './pages/CmsPages/CmsIndex/CmsIndex'
 import CmsNYouser from './pages/CmsPages/CmsNYouser/CmsNYouser'
+import CmsMenu from './pages/CmsPages/CmsMenu/CmsMenu'
 
 let routes=[
 
@@ -12,6 +13,7 @@ let routes=[
 
 children:[
 {path:'users',element:<CmsNYouser/>},
+{path:'menu',element:<CmsMenu/>},
 ]
 
 },
