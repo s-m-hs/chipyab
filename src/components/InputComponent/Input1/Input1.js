@@ -24,8 +24,9 @@ export default function InputComponent(props) {
         dispatch2({
             type: 'CHANGE',
             value: e.target.value,
-            validPropIn: props.validPropTo,
+            validPropIn: props.validPropTo  ,
         })
+        console.log(valuObj)
     }
     useEffect(() => {
         if (props.id === 'nameMenu') {

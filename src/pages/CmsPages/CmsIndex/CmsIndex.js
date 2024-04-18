@@ -1,18 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './CmsIndex.css'
 import CmsHeader from '../../../components/CmsComponents/CmsHeader/CmsHeader';
 import CmsSidebar from '../../../components/CmsComponents/CmsSidebar/CmsSidebar';
 import { CmsContext } from '../../../context/CmsContext';
 import { Outlet } from 'react-router-dom'
 
+
 export default function CmsIndex() {
+  const [flagClass,setFlagClass]=useState(true)
 const [value1,setValue1]=useState('')
   const [value2,setValue2]=useState('')
   const [value3,setValue3]=useState('')
 const [flag1,setFlag1]=useState('')
  const [flag2,setFlag2] =useState('')
  const [flag3,setFlag3] =useState('')
-  // const cmsContext = useContext(CmsContext)
+
 
 
 
@@ -25,6 +27,7 @@ const [flag1,setFlag1]=useState('')
 
     <>
     <CmsContext.Provider value={{
+      flagClass,setFlagClass,
       value1,setValue1,
       value2,setValue2,
       value3,setValue3,
@@ -40,7 +43,10 @@ const [flag1,setFlag1]=useState('')
           <div className="row">
             <div className="col col-1 col-md-2"><CmsSidebar /></div>
             <div className="col col-10 col-md-10">
-              <h4>خانه</h4>
+              <div className=   {flagClass ? 'cmsindex-maincontainer-div' : 'cmsindex-maincontainer-div-hidden'}   >
+                    <h4>خانه</h4>
+              </div>
+          
               <Outlet />
 
 

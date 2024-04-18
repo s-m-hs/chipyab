@@ -2,7 +2,12 @@
     margin-top: 55px !important;
     width: 95% !important;
 }
-
+.mainmenu-regbutton svg{
+    transform: rotate(180deg);
+    margin: 5px;
+}
 .mainmenu-col3{
     box-shadow: 0 0 15px -10px rgb(0,0,0,0.75);
 }
+
+

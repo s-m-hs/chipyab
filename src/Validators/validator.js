@@ -2,7 +2,7 @@ import rules from './rules'
 import regexes from './regexes';
 
 const validator = (input, validArry) => {
-    // console.log('validator==>', input, validArry);
+    console.log('validator==>', input, validArry);
 
     const arrayPushvalid = []
     for (const item of validArry) {

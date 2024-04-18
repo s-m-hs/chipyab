@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useState,useEffect,useContext } from 'react'
 import './MainMenu.css'
 import Input1 from '../../InputComponent/Input1/Input1'
 import SendIcon from '@mui/icons-material/Send';
@@ -10,12 +10,17 @@ import DataTable from '../DataTable/DataTable';
 
 
 export default function MainMenu() {
-
   const cmsContext = useContext(CmsContext)
-
+ let obj={
+    "id": 0,
+    "text": `${cmsContext.value1}`,
+    "nameCode": `${cmsContext.value2}`,
+    "imageUrl": `${cmsContext.value3}`
+  }
+  console.log(obj)
 const registerHandler=()=>{
-  //  console.log(cmsContext.value1)
-  // console.log(cmsContext.value2)
+   console.log(cmsContext.value1)
+  console.log(cmsContext.value2)
 
   // let obj={
   //   "id": 0,
@@ -34,7 +39,7 @@ const registerHandler=()=>{
       mode: 'no-cors',
       method:'POST',
       headers :{
-        //  "accept": "text/plain",
+        //  "accept":  "text/plain",
         "Content-Type":"application/json",
     
       },
@@ -44,10 +49,10 @@ const registerHandler=()=>{
   }
 
   
-  myApp()
+  // myApp()
   console.log(JSON.stringify(obj))
+  console.log(obj)
 }
-
 
 
   return (
@@ -55,6 +60,7 @@ const registerHandler=()=>{
     <div className='container'>
       <div className='row'>
         <div className='col-3 mainmenu-col3'>
+
           <Input1
             element='input'
             label='عنوان منو'

@@ -1,0 +1,17 @@
+.itemmenu-col3{
+    box-shadow: 0 0 15px -10px rgb(0,0,0,0.75);
+
+}
+
+.itemmenu-select-row{
+    box-shadow: 0 0 15px -10px rgb(0,0,0,0.75);
+
+}
+.itemmenu-regbutton{
+    margin-top: 55px !important;
+    width: 95% !important;
+}
+.itemmenu-regbutton svg {
+    transform: rotate(180deg);
+    margin: 5px;
+}

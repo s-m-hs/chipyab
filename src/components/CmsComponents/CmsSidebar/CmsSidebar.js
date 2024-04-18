@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { NavLink,Link } from 'react-router-dom';
 import './CmsSidebar.css'
 import FenceIcon from '@mui/icons-material/Fence';
@@ -21,12 +21,14 @@ import { CmsContext } from '../../../context/CmsContext';
 export default function CmsSidebar() {
 
     const cmsContext=useContext(CmsContext)
+
+
     return (
         <div className='cmssidebar-container'>
             <div className="cmssidebar-maindiv">
                 <h8 className='cmssidebar-h8'>Dashboard</h8>
-                <Link className='cmssidebar-div ' to={'/p-admin'}>
-                    <FenceIcon /><span>خانه</span></Link>
+                <Link className='cmssidebar-div ' to={'/p-admin'} >
+                    <FenceIcon /><span >خانه</span></Link>
                 <div className='cmssidebar-div'> <TimelineIcon /><span>آنالیز</span> </div>
                 <div className='cmssidebar-div'><TrendingUpIcon /><span>فروش</span> </div>
                 <hr />
@@ -44,8 +46,8 @@ export default function CmsSidebar() {
 
                 <div className='cmssidebar-div'><PaidIcon /> <span>محصولات جدید</span> </div>
 
-                <NavLink className='cmssidebar-div' to={'menu'}> 
-                <AssessmentIcon /> <span>دسته بندی</span>
+                <NavLink className='cmssidebar-div' to={'menu'} > 
+                <AssessmentIcon /> <span  >دسته بندی</span>
                 </NavLink>
 
                 <hr />
