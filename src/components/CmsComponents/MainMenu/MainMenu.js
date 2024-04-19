@@ -1,4 +1,4 @@
-import React, { useState,useEffect,useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import './MainMenu.css'
 import Input1 from '../../InputComponent/Input1/Input1'
 import SendIcon from '@mui/icons-material/Send';
@@ -10,58 +10,62 @@ import DataTable from '../DataTable/DataTable';
 
 
 export default function MainMenu() {
+  const [mMenuArray, setMMenuArray] = useState([])
   const cmsContext = useContext(CmsContext)
- let obj={
-    "id": 0,
-    "text": `${cmsContext.value1}`,
-    "nameCode": `${cmsContext.value2}`,
-    "imageUrl": `${cmsContext.value3}`
-  }
-  console.log(obj)
-const registerHandler=()=>{
-   console.log(cmsContext.value1)
-  console.log(cmsContext.value2)
 
-  // let obj={
-  //   "id": 0,
-  //   "text": `${cmsContext.value1}`,
-  //   "nameCode": `${cmsContext.value1}`,
-  //   "imageUrl": `${cmsContext.value1}`
-  // }
-  let obj={
-    id:0,
-    text:"ese",
-    nameCode:"ssr",
-    imageUrl:"tddd"
-  }
-  async function myApp(){
-    const res=await fetch(`http://wapi.chipyab.ir/api/CyMenus`,{
-      mode: 'no-cors',
-      method:'POST',
-      headers :{
-        //  "accept":  "text/plain",
-        "Content-Type":"application/json",
-    
-      },
-      
-      body:JSON.stringify(obj)
-    }).then(res=>console.log(res))
-  }
 
-  
-  // myApp()
-  console.log(JSON.stringify(obj))
-  console.log(obj)
-}
+
+  const registerHandler = () => {
+    let obj = {
+      id: 0,
+      text: cmsContext.value1,
+      nameCode: cmsContext.value2,
+      imageUrl: cmsContext.value3
+    }
+    async function myAppPost() {
+
+      const res = await fetch(`http://wapi.chipyab.ir/api/CyMenus`, {
+
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify(obj)
+      }).then((res) => {
+        console.log(res)
+      }).then((result) => {
+        console.log(result);
+      })
+    }
+    // myAppPost()
+    return cmsContext.setFlagResetInput(true),
+      console.log(obj)
+  }
+  ////////////////////////
+  useEffect(() => {
+    async function myAppGet() {
+      const res = await fetch(`http://wapi.chipyab.ir/api/CyMenus`, {
+        method: 'GET',
+      }).then(res => res.json()).
+        then((result) => {
+          console.log(result);
+          setMMenuArray(result)
+          console.log(mMenuArray);
+        })
+    }
+    // myAppGet()
+  }, [cmsContext.value1])
 
 
   return (
 
     <div className='container'>
       <div className='row'>
-        <div className='col-3 mainmenu-col3'>
+        <div className='col-12 col-sm-3 mainmenu-col3'>
 
           <Input1
+            value={cmsContext.value1}
             element='input'
             label='عنوان منو'
             id='nameMenu'
@@ -70,9 +74,11 @@ const registerHandler=()=>{
               requiedValidator(),
               minValidator(2),
             ]}
-          />
 
+          />
           <Input1
+
+            value={cmsContext.value2}
             element='input'
             id='nameCode'
             label='کد منو'
@@ -81,76 +87,62 @@ const registerHandler=()=>{
               requiedValidator(),
               minValidator(2),
             ]}
+
           />
           <Input1
+            value={cmsContext.value3}
             element='input'
             id='imageUrl'
             label='imageUrl '
-            type='text'
+            type='file'
             validPropTo={[
               requiedValidator(),
 
             ]}
           />
           <Button className='mainmenu-regbutton' type='submit' fullWidth
-            variant="contained" 
+            variant="contained"
             endIcon={<SendIcon />}
             onClick={registerHandler}
-            >
+          >
             <span>
               Register
             </span>
           </Button>
 
-
-
-
-
         </div>
-        
-         <div className='col-9'>
+        <div className='col-12 col-sm-9'>
 
-      <DataTable title={'لیست منوها :'}>
+          <DataTable title={'لیست منوها :'}>
 
-<table className='table table-striped'>
-<thead>
-  <tr>
-    <th>شماره</th>
-    <th>نام منوی </th>
-    <th>کد منو</th>
-    <th>ID</th>
-  </tr>
-</thead>
+            <table className='table table-striped'>
+              <thead>
+                <tr>
+                  <th>شماره</th>
+                  <th>نام منوی </th>
+                  <th>کد منو</th>
+                  <th>ID</th>
+                </tr>
+              </thead>
 
-<tbody>
-<tr>
-  <td>1</td>
-  <td>منوی الف</td>
-  <td>m1</td>
-  <td>1</td>
-</tr>
+              <tbody>
+                {mMenuArray.map((item, index) => (
+                  <tr>
+                    <td>{index + 1}</td>
+                    <td>{item.text} </td>
+                    <td>{item.nameCode}</td>
+                    <td>{item.imageUrl}</td>
+                  </tr>
+                ))}
 
-<tr>
-  <td>1</td>
-  <td>منوی الف</td>
-  <td>m1</td>
-  <td>1</td>
-</tr>
+              </tbody>
 
-<tr>
-  <td>1</td>
-  <td>منوی الف</td>
-  <td>m1</td>
-  <td>1</td>
-</tr>
-</tbody>
+            </table>
 
-</table>
-
-      </DataTable>
+          </DataTable>
+        </div>
       </div>
-        </div>
-     
+
     </div>
 
   )

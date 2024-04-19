@@ -5,9 +5,21 @@
 .mainmenu-regbutton svg{
     transform: rotate(180deg);
     margin: 5px;
+    font-size: 1.2cqi !important;
+}
+.mainmenu-regbutton span{
+    font-size: 1.3cqi;
 }
 .mainmenu-col3{
     box-shadow: 0 0 15px -10px rgb(0,0,0,0.75);
+}
+
+.a{
+    border: 1px solid green !important;
+}
+.b{
+    border: 1px solid red !important;
+
 }
 
 

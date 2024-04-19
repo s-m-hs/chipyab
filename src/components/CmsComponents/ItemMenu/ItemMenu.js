@@ -23,7 +23,7 @@ export default function ItemMenu() {
             <div className='row row-cols-4 itemmenu-select-row'>
                 <Box sx={{ minWidth: 120 }}>
                     <FormControl
-                    autoWidth
+
                     >
                         <InputLabel variant="standard" htmlFor="uncontrolled-native">
                             منوی اصلی
@@ -44,7 +44,7 @@ export default function ItemMenu() {
 
                 <Box sx={{ minWidth: 120 }}>
                     <FormControl
-                    autoWidth
+
                     >
                         <InputLabel variant="standard" htmlFor="uncontrolled-native">
                             منوی فرعی                             </InputLabel>
@@ -64,8 +64,8 @@ export default function ItemMenu() {
 
             </div>
 
-            <div className='row mt-3'>
-                <div className='col-3 itemmenu-col3'>
+            {/* <div className='row mt-3'>
+                <div className='col-12 col-sm-3 itemmenu-col3'>
 
                     <Input1
                         element='input'
@@ -163,7 +163,7 @@ export default function ItemMenu() {
 
 
                 </div>
-                <div className='col-9'>
+                <div className='col-12 col-sm-9'>
                     <DataTable title={'لیست منوها :'}>
 
                         <table className='table table-striped'>
@@ -204,7 +204,7 @@ export default function ItemMenu() {
                     </DataTable>
                 </div>
             </div>
-
+ */}
 
         </div>
     )

@@ -1,61 +1,43 @@
-import React, { useEffect, useReducer, useContext } from 'react'
+import React, { useEffect, useReducer, useContext, useState } from 'react'
 import './Input1.css'
 import validator from '../../../Validators/validator';
 import { CmsContext } from '../../../context/CmsContext'
-// import { LoginContext } from '../../context/loginContext'
-// import { RegisterContext } from '../../context/loginContext';
 
 
-function ChangValuReducer(state, action) {
-    switch (action.type) {
-        case 'CHANGE':
-            return {
-                ...state,
-                value: action.value,
-                isValid: validator(action.value, action.validPropIn),
-            }
-    }
-}
+
 export default function InputComponent(props) {
-    const [valuObj, dispatch2] = useReducer(ChangValuReducer, { value: '', isValid: false, method: '' })
+    const [valuObj, setValuObj] = useState('')
+    const [isvalid, setIsValid] = useState('')
     const cmsContext = useContext(CmsContext)
-    // const input2Context = useContext(RegisterContext)
     function changeHandler(e) {
-        dispatch2({
-            type: 'CHANGE',
-            value: e.target.value,
-            validPropIn: props.validPropTo  ,
-        })
+        setValuObj(e.target.value)
+       setIsValid(validator(e.target.value,props.validPropTo))
+        cmsContext.setFlagResetInput(false)
         console.log(valuObj)
+        console.log(isvalid);
     }
     useEffect(() => {
-        if (props.id === 'nameMenu') {
-            cmsContext.setValue1(valuObj.value)
-            cmsContext.setFlag1(valuObj.isValid)
-        } else if (props.id === 'nameCode') {
-            cmsContext.setValue2(valuObj.value)
-            cmsContext.setFlag2(valuObj.isValid)
-        } else if (props.id === 'imageUrl') {
-            cmsContext.setValue3(valuObj.value)
-            cmsContext.setFlag3(valuObj.isValid)
+        if (!cmsContext.flagResetInput) {
+            if (props.id === 'nameMenu') {
+                cmsContext.setValue1(valuObj)
+                cmsContext.setFlag1(isvalid)
+            } else if (props.id === 'nameCode') {
+                cmsContext.setValue2(valuObj)
+                cmsContext.setFlag2(isvalid)
+            } else if (props.id === 'imageUrl') {
+                cmsContext.setValue3(valuObj)
+                cmsContext.setFlag3(isvalid)
+            }
+
+        } else {
+            cmsContext.setValue1('')
+            cmsContext.setValue2('')
+            cmsContext.setValue3('')
+            setIsValid('')
+            setValuObj('')
+
         }
 
-
-
-
-        // else if (props.id === 'rname') {
-        //     input2Context.setValue4(valuObj.value)
-        //     input2Context.setFlag4(valuObj.isValid)
-        // } else if (props.id === 'rusername') {
-        //     input2Context.setValue1(valuObj.value)
-        //     input2Context.setFlag1(valuObj.isValid)
-        // } else if (props.id === 'rpassword') {
-        //     input2Context.setValue2(valuObj.value)
-        //     input2Context.setFlag2(valuObj.isValid)
-        // } else if (props.id === 'remail') {
-        //     input2Context.setValue3(valuObj.value)
-        //     input2Context.setFlag3(valuObj.isValid)
-        // }
     })
 
 
@@ -64,17 +46,17 @@ export default function InputComponent(props) {
             (
                 <>
                     <div className="login-label-float">
-                        <input 
-                        type={props.type}
-                        placeholder=""
+                        <input
+                        // className={props.className}
+                        className={isvalid ? 'a' : !valuObj ? '' : 'b'}
+                            type={props.type}
+                            placeholder=""
                             onChange={changeHandler}
+                            // value={valuObj.value}
+                            value={props.value}
                         />
                         <label>{props.label}</label>
                     </div>
-
-
-
-
 
                     {/* 
                     <input
@@ -91,7 +73,6 @@ export default function InputComponent(props) {
                 className={props.className}
 
             />
-
 
             )
 

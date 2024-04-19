@@ -14,4 +14,9 @@
 .itemmenu-regbutton svg {
     transform: rotate(180deg);
     margin: 5px;
+    font-size: 1.2cqi !important;
+
+}
+.itemmenu-regbutton span{
+    font-size: 1.3cqi;
 }
