@@ -13,6 +13,19 @@
 .mainmenu-col3{
     box-shadow: 0 0 15px -10px rgb(0,0,0,0.75);
 }
+.mainmenu-table th {
+    font-size: 1cqi;
+}
+
+.mainmenu-table td{
+    font-size: 1.1cqi;
+}
+.mainmenu-editbut{
+    margin: 2px;
+}
+.modal-content{
+    direction: rtl;
+}
 
 .a{
     border: 1px solid green !important;

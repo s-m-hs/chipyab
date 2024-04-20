@@ -14,9 +14,15 @@ export default function CmsIndex() {
   const [value1, setValue1] = useState('')
   const [value2, setValue2] = useState('')
   const [value3, setValue3] = useState('')
+  const [value4, setValue4] = useState('')
+  const [value5, setValue5] = useState('')
+  const [value6, setValue6] = useState('')
   const [flag1, setFlag1] = useState('')
   const [flag2, setFlag2] = useState('')
   const [flag3, setFlag3] = useState('')
+  const [flag4, setFlag4] = useState('')
+  const [flag5, setFlag5] = useState('')
+  const [flag6, setFlag6] = useState('')
 
 
 
@@ -39,9 +45,15 @@ export default function CmsIndex() {
         value1, setValue1,
         value2, setValue2,
         value3, setValue3,
+        value4, setValue4,
+        value5, setValue5,
+        value6, setValue6,
         flag1, setFlag1,
         flag2, setFlag2,
         flag3, setFlag3,
+        flag4, setFlag4,
+        flag5, setFlag5,
+        flag6, setFlag6,
       }}>
         <div className="cms-container">
 

@@ -10,12 +10,68 @@ import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
+import Swal from 'sweetalert2'
+
 
 
 
 export default function ItemMenu() {
+    const [mMenuArrayB, setMMenuArrayB] = useState([])
 
-    const registerHandler = () => { }
+    const cmsContext=useContext(CmsContext)
+
+     //////////////////////////
+     const registerGet = () => {
+        async function myAppGet() {
+          const res = await fetch(`http://wapi.chipyab.ir/api/CyMenus`, {
+            method: 'GET',
+          }).then(res => res.json()).
+            then((result) => {
+              setMMenuArrayB(result)
+            })
+        }
+        myAppGet()
+      }
+  //////////////////////////
+    const registerHandler = (e) => {
+        e.preventDefault()
+        let obj = {
+            id: 0,
+            text: cmsContext.value1,
+            orderValue: cmsContext.value2,
+            pageUrl: cmsContext.value3,
+            rootId: cmsContext.value4,
+            cyMenuId: 0,
+            meta:cmsContext.value5,
+            imageUrl:cmsContext.value6
+          }
+          async function myAppPost() {
+            const res = await fetch(`http://wapi.chipyab.ir/api/CyMenus`, {
+              method: 'POST',
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(obj)
+            }).then((res) => {
+              console.log(res.json())
+              if (res.ok) {
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: "منو با موفقیت اضافه شد",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+      }
+            })
+          }
+        //   myAppPost()
+          return cmsContext.setFlagResetInput(true)
+     }
+  //////////////////////
+  useEffect(() => {
+    registerGet()
+  }, [cmsContext.flagResetInput, cmsContext.value1])
 
 
     return (
@@ -35,9 +91,12 @@ export default function ItemMenu() {
                                 id: 'uncontrolled-native',
                             }}
                         > <option value=''> </option>
-                            <option value={10}>منوی الف</option>
-                            <option value={20}>منوی ب</option>
-                            <option value={30}>منوی ج</option>
+                        {mMenuArrayB &&  mMenuArrayB.map(((item,index)=>(
+                            <option key={item.id} value={index+1}> {item.text}</option>
+                        )))}
+                            
+                            {/* <option value={20}>منوی ب</option>
+                            <option value={30}>منوی ج</option> */}
                         </NativeSelect>
                     </FormControl>
                 </Box>
@@ -64,33 +123,34 @@ export default function ItemMenu() {
 
             </div>
 
-            {/* <div className='row mt-3'>
+            <div className='row mt-3'>
                 <div className='col-12 col-sm-3 itemmenu-col3'>
-
-                    <Input1
+<form>
+      <Input1
+                    value={cmsContext.value1}
                         element='input'
-                        label='ItemMeni Title '
-                        id='nameMenu'
+                        label='ItemMenu Title '
+                        id='menuItem'
                         type='text'
                         validPropTo={[
                             requiedValidator(),
-                            minValidator(2),
                         ]}
                     />
 
                     <Input1
+                     value={cmsContext.value2}
                         element='input'
-                        id='nameCode'
-                        label='orderValue '
+                        id='itemOrderValue'
+                        label='OrderValue '
                         type='text'
                         validPropTo={[
                             requiedValidator(),
-                            minValidator(2),
                         ]}
                     />
                     <Input1
+                     value={cmsContext.value3}
                         element='input'
-                        id='imageUrl'
+                        id='itemPageUrl'
                         label='PageUrl '
                         type='text'
                         validPropTo={[
@@ -99,8 +159,9 @@ export default function ItemMenu() {
                         ]}
                     />
                     <Input1
+                     value={cmsContext.value4}
                         element='input'
-                        id='imageUrl'
+                        id='mainMenuid'
                         label='RootId '
                         type='text'
                         validPropTo={[
@@ -109,9 +170,10 @@ export default function ItemMenu() {
                         ]}
                     />
                     <Input1
+                     value={cmsContext.value5}
                         element='input'
-                        id='imageUrl'
-                        label='MainMenuId '
+                        id='meta'
+                        label='Meta'
                         type='text'
                         validPropTo={[
                             requiedValidator(),
@@ -119,49 +181,27 @@ export default function ItemMenu() {
                         ]}
                     />
                     <Input1
+                     value={cmsContext.value6}
                         element='input'
-                        id='imageUrl'
-                        label='Meta '
-                        type='text'
-                        validPropTo={[
-                            requiedValidator(),
-
-                        ]}
-                    />
-                    <Input1
-                        element='input'
-                        id='imageUrl'
+                        id='itemImageUrl'
                         label='ImageUrl '
-                        type='text'
+                        type='file'
                         validPropTo={[
                             requiedValidator(),
 
                         ]}
                     />
-
-
-
-
-
-
-
-
-
-
                     <Button className='itemmenu-regbutton' type='submit' fullWidth
                         variant="contained"
                         endIcon={<SendIcon />}
                         onClick={registerHandler}
                     >
                         <span>
-                            Register
+                            افزودن
                         </span>
                     </Button>
-
-
-
-
-
+</form>
+                  
                 </div>
                 <div className='col-12 col-sm-9'>
                     <DataTable title={'لیست منوها :'}>
@@ -204,7 +244,7 @@ export default function ItemMenu() {
                     </DataTable>
                 </div>
             </div>
- */}
+
 
         </div>
     )
