@@ -4,6 +4,7 @@ import MainMenu from '../../../components/CmsComponents/MainMenu/MainMenu'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import ItemMenu from '../../../components/CmsComponents/ItemMenu/ItemMenu';
+import MainShow from '../../../components/CmsComponents/MainShow/MainShow';
 import { CmsContext } from '../../../context/CmsContext';
 import { MainMenuContext } from '../../../context/CmsMaimMenuContext';
 
@@ -50,8 +51,9 @@ tabId,setTabId
             <ItemMenu />
           </Tab>
 
-
-          <Tab eventKey="longer-tab" title=" نمایش منوها">
+         
+          <Tab eventKey="longer-tab" title=" نمایش منوها" style={{ background: 'inherit' }}>
+             <MainShow/>
           </Tab>
 
         </Tabs>

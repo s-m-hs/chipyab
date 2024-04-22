@@ -23,3 +23,19 @@
 .itemmenu-select-row :nth-child(1){
     margin-bottom: 10px;
 }
+.itemmenu-editbut {
+    font-size: 0.5cqi !important;
+    margin: 2px;
+
+}
+.itemmenu-deletbut{
+    font-size: 0.5cqi !important;
+    margin: 2px;
+
+}
+.itemmenu-table th{
+    font-size: .7cqi;
+}
+.itemmenu-table td{
+font-size: .9cqi;
+}

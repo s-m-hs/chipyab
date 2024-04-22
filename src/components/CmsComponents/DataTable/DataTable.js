@@ -6,7 +6,7 @@ export default function DataTable({title,children}) {
 
         <div className='row'>
             <div className='col'>
-<h3>{title}</h3>
+<h3 className='datatable-title'>{title}</h3>
 {children}
             </div>
         </div>

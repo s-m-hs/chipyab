@@ -13,8 +13,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 import Swal from 'sweetalert2'
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
+
 
 
 
@@ -45,6 +44,14 @@ export default function ItemMenu() {
 
 
     const mainMenuContext = useContext(MainMenuContext)
+/////////////////////////////
+const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: "btn btn-success",
+      cancelButton: "btn btn-danger"
+    },
+    buttonsStyling: false
+  });
 
     //////////////////////////////
     const handleChange = (event) => {
@@ -63,7 +70,45 @@ export default function ItemMenu() {
         setRootIdA(event.target.value)
         setIdSelectMenuB(event.target.value)
     }
+/////////////////////////  api Method===>
+const deletHandler = (id) => {
+    swalWithBootstrapButtons.fire({
+      title: "آیا از حذف اطمینان دارید؟",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "بله",
+      cancelButtonText: "خیر ",
+      reverseButtons: true
+    }).then((result => {
+      if (result.isConfirmed) {
+        async function myAppDelet() {
+          const res = await fetch(`http://wapi.chipyab.ir/api/CyMenuItems/${id}`, {
+            method: 'DELETE'
+          }).then(
+            res => console.log(res)
+          ).then(result => {
+            swalWithBootstrapButtons.fire({
+              title: "حذف انجام شد!",
+              icon: "success"
+            }).then(result => {
+                registerGetItem()
+            })
+          })
+        }
+        myAppDelet()
 
+      } else if (
+
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire({
+          title: "حذف انجام نشد",
+          icon: "error"
+        });
+      }
+    }))
+
+  }
     ////////////////////////
     const registerGetMenu = () => {
         async function myAppGet() {
@@ -83,7 +128,6 @@ export default function ItemMenu() {
                 method: 'GET',
             }).then(res => res.json()).
                 then((result) => {
-
                     setItemArrayB(result)
                     console.log(itemArrayB)
                 })
@@ -134,6 +178,7 @@ export default function ItemMenu() {
     useEffect(() => {
         registerGetMenu()
         registerGetItem()
+
     }, [mainMenuContext.flagResetInput, mainMenuContext.tabId])
     ///////////////////////
     useEffect(() => {
@@ -176,7 +221,7 @@ export default function ItemMenu() {
                                     id: 'uncontrolled-native',
                                 }}
                                 onChange={handleChange}  >
-                                <option value=''> </option>
+                                <option value=''>  لطفا انتخاب کنید</option>
                                 {mMenuArrayB && mMenuArrayB.map(((item, index) => (
                                     <option key={item.id} value={item.id} > {item.text}</option>
                                 )))}
@@ -199,7 +244,7 @@ export default function ItemMenu() {
                                     'aria-label': 'Without label'
                                 }}
                                 onChange={handleChangeB}
-                            > <option value=''> </option>
+                            > <option value=''>  لطفا انتخاب کنید</option>
                                 {itemArrayB && itemArrayB.filter(item => {
                                     return (item.cyMenuId == idSelectMenu && item.rootId == 0)
                                 }).map(((item, index) => (
@@ -208,16 +253,12 @@ export default function ItemMenu() {
                             </NativeSelect>
                         </FormControl>
                     </Box>
-
-
                     <Box sx={{ minWidth: 150 }}>
                         <FormControl fullWidth
-
                         >
                             <InputLabel variant="standard" htmlFor="uncontrolled-native">
                                 منوی فرعی                             </InputLabel>
                             <NativeSelect
-
                                 defaultValue=''
                                 inputProps={{
                                     name: 'age',
@@ -225,9 +266,8 @@ export default function ItemMenu() {
                                     'aria-label': 'Without label'
                                 }}
                             // onChange={handleChangeC}
-                            > <option value=''> </option>
+                            > <option value=''> لطفا انتخاب کنید</option>
                                 {itemArrayB && itemArrayB.filter(item => {
-                                    console.log(item);
                                     return (item.cyMenuId == idSelectMenu && item.rootId !== 0 && item.rootId == rootIdA)
                                 }).map(((item, index) => (
                                     <option key={item.id} value={item.id}  > {item.text}</option>
@@ -241,8 +281,8 @@ export default function ItemMenu() {
                         {mainMenuContext.tabId === 'profile' &&
                             <>
                                 {/* <h1>{titleSelectMenu}</h1> */}
-                                <h1>{idSelectMenu}</h1>
-                                <h2>{rootIdA}</h2>
+                                {/* <h1>{idSelectMenu}</h1>
+                                <h2>{rootIdA}</h2> */}
                                 <form>
                                     <Input1
                                         // value={cmsContextB.value1}
@@ -265,18 +305,8 @@ export default function ItemMenu() {
                                             requiedValidator(),
                                         ]}
                                     />
-                                    <Input1
-                                        // value={cmsContextB.value3}
-                                        element='input'
-                                        id='itemPageUrl'
-                                        label='PageUrl '
-                                        type='text'
-                                        validPropTo={[
-                                            requiedValidator(),
-
-                                        ]}
-                                    />
-                                    <Input1
+                                  
+                                    {/* <Input1
                                         // value={cmsContextB.value4}
                                         element='input'
                                         id='mainMenuid'
@@ -286,13 +316,24 @@ export default function ItemMenu() {
                                             requiedValidator(),
 
                                         ]}
-                                    />
+                                    /> */}
                                     <Input1
                                         // value={cmsContextB.value5}
                                         element='input'
                                         id='meta'
                                         label='Meta'
                                         type='text'
+                                        validPropTo={[
+                                            requiedValidator(),
+
+                                        ]}
+                                    />
+                                      <Input1
+                                        // value={cmsContextB.value3}
+                                        element='input'
+                                        id='itemPageUrl'
+                                        label='PageUrl '
+                                        type='file'
                                         validPropTo={[
                                             requiedValidator(),
 
@@ -324,7 +365,7 @@ export default function ItemMenu() {
                     <div className='col-12 col-sm-9'>
                         <DataTable title={'لیست منوی اصلی :'}>
 
-                            <table className='table table-striped'>
+                            <table className='table table-striped  itemmenu-table'>
                                 <thead>
                                     <tr>
                                         <th>شماره</th>
@@ -351,6 +392,15 @@ export default function ItemMenu() {
                                             <td>{item.id}</td>
                                             <td>{item.pageUrl}</td>
                                             <td>{item.imageUrl}</td>
+                                            <td>
+                      <button className='btn btn-info itemmenu-editbut'
+                    //    onClick={() => editHandler(item.id, item.text, item.nameCode, item.imageUrl)}
+                        >ویرایش</button>
+                      <button  className='btn btn-danger itemmenu-deletbut' 
+
+                    onClick={() => deletHandler(item.id)} 
+                      >حذف</button>
+                    </td>
                                         </tr>
                                     )))}
                                 </tbody>
@@ -361,7 +411,7 @@ export default function ItemMenu() {
 
                         <DataTable title={'لیست منوی فرعی :'}>
 
-                            <table className='table table-striped'>
+                            <table className='table table-striped itemmenu-table'>
                                 <thead>
                                     <tr>
                                         <th>شماره</th>
@@ -377,7 +427,6 @@ export default function ItemMenu() {
 
                                 <tbody>
                                     {itemArrayB && itemArrayB.filter(item => {
-                                        console.log(item);
                                         return (item.cyMenuId == idSelectMenu && item.rootId !== 0 && item.rootId == rootIdA)
                                     }).map(((item, index) => (
                                         <tr>
@@ -389,6 +438,15 @@ export default function ItemMenu() {
                                             <td>{item.id}</td>
                                             <td>{item.pageUrl}</td>
                                             <td>{item.imageUrl}</td>
+                                            <td>
+                      <button className='btn btn-info itemmenu-editbut'
+                    //    onClick={() => editHandler(item.id, item.text, item.nameCode, item.imageUrl)}
+                        >ویرایش</button>
+                      <button  className='btn btn-danger itemmenu-deletbut' 
+
+                    onClick={() => deletHandler(item.id)} 
+                      >حذف</button>
+                    </td>
                                         </tr>)))}
 
                                 </tbody>
