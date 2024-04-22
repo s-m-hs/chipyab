@@ -3,27 +3,34 @@ import './MainMenu.css'
 import Input1 from '../../InputComponent/Input1/Input1'
 import SendIcon from '@mui/icons-material/Send';
 import Button from '@mui/material/Button';
-import { CmsContext } from '../../../context/CmsContext';
-import { requiedValidator, minValidator} from '../../../Validators/rules'
+import {MenuContext} from '../../../context/CmsMaimMenuContext';
+import {MainMenuContext} from '../../../context/CmsMaimMenuContext';
+import { requiedValidator, minValidator } from '../../../Validators/rules'
 import DataTable from '../DataTable/DataTable';
 import Swal from 'sweetalert2'
 import Modal from 'react-bootstrap/Modal';
 
 export default function MainMenu() {
+  const [value1, setValue1] = useState('')
+  const [value2, setValue2] = useState('')
+  const [value3, setValue3] = useState('')
+  const [flag1, setFlag1] = useState('')
+  const [flag2, setFlag2] = useState('')
+  const [flag3, setFlag3] = useState('')
   const [mMenuArray, setMMenuArray] = useState([])
   const [putValue1, setPutValue1] = useState('')
   const [putValue2, setPutValue2] = useState('')
   const [putValue3, setPutValue3] = useState('')
   const [putId, setPutId] = useState('')
 
-  const cmsContext = useContext(CmsContext)
+  const mainMenuContext = useContext(MainMenuContext)
 
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setShow(true);
-    cmsContext.setFlagResetInput(true)
+    // cmsContext.setFlagResetInput(true)
   }
   //////////////////////
   const changeInputHandlerA = (e) => {
@@ -139,13 +146,15 @@ export default function MainMenu() {
     myAppGet()
   }
   //////////////////////////
-  const registerHandler = () => {
+  const registerHandler = (e) => {
+    e.preventDefault()
     let obj = {
       id: 0,
-      text: cmsContext.value1,
-      nameCode: cmsContext.value2,
-      imageUrl: cmsContext.value3
+      text: value1,
+      nameCode: value2,
+      imageUrl: value3
     }
+    console.log(obj)
     async function myAppPost() {
       const res = await fetch(`http://wapi.chipyab.ir/api/CyMenus`, {
         method: 'POST',
@@ -164,64 +173,95 @@ export default function MainMenu() {
             timer: 1500,
           });
           registerGet()
-        }
+          mainMenuContext.setFlagResetInput(prev=>!prev)
+         }
       })
     }
     myAppPost()
-    return cmsContext.setFlagResetInput(true)
+
+
   }
   //////////////////////
-  useEffect(() => {
+  useEffect(() => { 
     registerGet()
-  }, [cmsContext.flagResetInput, cmsContext.value1])
+  }, [value1])
+  ///////////////////
+  useEffect(() => {
+    mainMenuContext.setTabId('home')
 
+  }, [])
 
   return (
 
-    <div className='container'>
+<MenuContext.Provider value={{
+      value1, setValue1,
+      value2, setValue2,
+      value3, setValue3,
+      flag1, setFlag1,
+      flag2, setFlag2,
+      flag3, setFlag3,
+}}>
+
+     <div className='container'>
       <div className='row'>
         <div className='col-12 col-sm-3 mainmenu-col3'>
-          <Input1
-            value={cmsContext.value1}
-            element='input'
-            label='MenuTitle'
-            id='nameMenu'
-            type='text'
-            validPropTo={[
-              requiedValidator(),
-              minValidator(2),
-            ]}
-          />
-          <Input1
-            value={cmsContext.value2}
-            element='input'
-            id='nameCode'
-            label='MenuCode'
-            type='text'
-            validPropTo={[
-              requiedValidator(),
-              minValidator(2),
-            ]}
-          />
-          <Input1
-            value={cmsContext.value3}
-            element='input'
-            id='imageUrl'
-            label='imageUrl '
-            type='file'
-            validPropTo={[
-              requiedValidator(),
-            ]}
-          />
-          <Button className='mainmenu-regbutton' type='submit' fullWidth
-            variant="contained"
-            endIcon={<SendIcon />}
-            onClick={registerHandler}
-          >
-            <span>
-              افزودن
-            </span>
-          </Button>
+          {mainMenuContext.tabId === 'home' &&
+
+
+            <>
+
+              <form action="">
+                <Input1
+                  // value={value1}
+                  element='input'
+                  label='MenuTitle'
+                  id='nameMenu'
+                  type='text'
+                  validPropTo={[
+                    requiedValidator(),
+                    minValidator(2),
+                  ]}
+                />
+                <Input1
+                  // value={value2}
+                  element='input'
+                  id='menuCode'
+                  label='MenuCode'
+                  type='text'
+                  validPropTo={[
+                    requiedValidator(),
+                    minValidator(2),
+                  ]}
+                />
+                <Input1
+                  // value={value3}
+                  element='input'
+                  id='imageUrl'
+                  label='imageUrl '
+                  type='file'
+                  validPropTo={[
+                    requiedValidator(),
+                  ]}
+                />
+                <Button className='mainmenu-regbutton' type='submit' fullWidth
+                  variant="contained"
+                  endIcon={<SendIcon />}
+                  onClick={registerHandler}
+                >
+                  <span>
+                    افزودن
+                  </span>
+                </Button>
+              </form>
+
+
+
+            </>
+          }
+          {/* } */}
+
+
+
         </div>
         <div className='col-12 col-sm-9'>
           <DataTable title={'لیست منوها :'}>
@@ -302,5 +342,8 @@ export default function MainMenu() {
       </>
     </div>
 
+</MenuContext.Provider>
+
+ 
   )
 }

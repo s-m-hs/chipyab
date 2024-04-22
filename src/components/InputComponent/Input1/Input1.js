@@ -1,44 +1,76 @@
 import React, { useEffect, useReducer, useContext, useState } from 'react'
 import './Input1.css'
 import validator from '../../../Validators/validator';
-import { CmsContext } from '../../../context/CmsContext'
+import { MenuContext } from '../../../context/CmsMaimMenuContext'
+import { ItemContext } from '../../../context/CmsMaimMenuContext'
+import {MainMenuContext} from '../../../context/CmsMaimMenuContext';
 
 
+function ChangValuReducer(state, action) {
+    switch (action.type) {
+        case 'CHANGE':
+            return {
+                ...state,
+                value: action.value,
+                isValid: validator(action.value, action.validPropIn),
+            }
+           
+    }
+}
 
 export default function InputComponent(props) {
-    const [valuObj, setValuObj] = useState('')
-    const [isvalid, setIsValid] = useState('')
-    const cmsContext = useContext(CmsContext)
+    const [valuObj, dispatch2] = useReducer(ChangValuReducer, { value: '', isValid: false, method: '' })
+    const menuContext = useContext(MenuContext)
+    const itemContext = useContext(ItemContext)
+    const mainMenuContext = useContext(MainMenuContext)
+
     function changeHandler(e) {
-        setValuObj(e.target.value)
-       setIsValid(validator(e.target.value,props.validPropTo))
-        cmsContext.setFlagResetInput(false)
-        console.log(valuObj)
-        console.log(isvalid);
+        dispatch2({
+            type: 'CHANGE',
+            value: e.target.value,
+            validPropIn: props.validPropTo,
+        })
     }
     useEffect(() => {
-        if (!cmsContext.flagResetInput) {
-            if (props.id === 'nameMenu') {
-                cmsContext.setValue1(valuObj)
-                cmsContext.setFlag1(isvalid)
-            } else if (props.id === 'nameCode') {
-                cmsContext.setValue2(valuObj)
-                cmsContext.setFlag2(isvalid)
-            } else if (props.id === 'imageUrl') {
-                cmsContext.setValue3(valuObj)
-                cmsContext.setFlag3(isvalid)
-            }
-
-        } else {
-            cmsContext.setValue1('')
-            cmsContext.setValue2('')
-            cmsContext.setValue3('')
-            setIsValid('')
-            setValuObj('')
-
+        if (props.id === 'nameMenu') {
+            menuContext.setValue1(valuObj.value)
+            menuContext.setFlag1(valuObj.isValid)
+        } else if (props.id === 'menuCode') {
+            menuContext.setValue2(valuObj.value)
+            menuContext.setFlag2(valuObj.isValid)
+        } else if (props.id === 'imageUrl') {
+            menuContext.setValue3(valuObj.value)
+            menuContext.setFlag3(valuObj.isValid)
         }
-
+        else if (props.id === 'menuItem') {
+            itemContext.setValue1(valuObj.value)
+            itemContext.setFlag1(valuObj.isValid)
+        } else if (props.id === 'itemOrderValue') {
+            itemContext.setValue2(valuObj.value)
+            itemContext.setFlag2(valuObj.isValid)
+        } else if (props.id === 'itemPageUrl') {
+            itemContext.setValue3(valuObj.value)
+            itemContext.setFlag3(valuObj.isValid)
+        } else if (props.id === 'mainMenuid') {
+            itemContext.setValue4(valuObj.value)
+            itemContext.setFlag4(valuObj.isValid)
+        } else if (props.id === 'Meta') {
+            itemContext.setValue5(valuObj.value)
+            itemContext.setFlag5(valuObj.isValid)
+        } else if (props.id === 'itemImageUrl') {
+            itemContext.setValue6(valuObj.value)
+            itemContext.setFlag6(valuObj.isValid)
+        }
     })
+useEffect(()=>{
+    dispatch2({
+        type: 'CHANGE',
+        value: '',
+        validPropIn: props.validPropTo,
+    })},
+    [mainMenuContext.flagResetInput]
+) 
+
 
 
     const element =
@@ -47,13 +79,14 @@ export default function InputComponent(props) {
                 <>
                     <div className="login-label-float">
                         <input
-                        // className={props.className}
-                        className={isvalid ? 'a' : !valuObj ? '' : 'b'}
+                            value={valuObj.value}
                             type={props.type}
-                            placeholder=""
+                            className={props.className}
                             onChange={changeHandler}
-                            // value={valuObj.value}
-                            value={props.value}
+                            placeholder=""
+                        // className={isvalid ? 'a' : !valuObj ? '' : 'b'}
+
+
                         />
                         <label>{props.label}</label>
                     </div>

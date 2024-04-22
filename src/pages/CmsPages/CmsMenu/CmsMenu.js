@@ -1,13 +1,16 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './CmsMenu.css'
 import MainMenu from '../../../components/CmsComponents/MainMenu/MainMenu'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import ItemMenu from '../../../components/CmsComponents/ItemMenu/ItemMenu';
 import { CmsContext } from '../../../context/CmsContext';
-
+import { MainMenuContext } from '../../../context/CmsMaimMenuContext';
 
 export default function CmsMenu() {
+  const [flagResetInput, setFlagResetInput] = useState(false)
+const [tabId,setTabId]=useState('')
+
   const cmsContext = useContext(CmsContext)
 
   useEffect(() => {
@@ -16,11 +19,17 @@ export default function CmsMenu() {
     return () => cmsContext.setFlagClass(true)
   }, [])
 
-  const ffc=()=>{
+  const ffc=(tabName)=>{
     cmsContext.setFlagResetInput(true)
+    console.log('ffc')
+    setTabId(tabName)
   }
-  return (
-    <div className='container'>
+    return (
+<MainMenuContext.Provider  value={{
+    flagResetInput, setFlagResetInput,
+tabId,setTabId
+}}>
+      <div className='container'>
       <>
 
         <Tabs
@@ -28,7 +37,8 @@ export default function CmsMenu() {
           id="fill-tab-example"
           className="mb-2"
         // fill
-        onClick={ffc}
+        onSelect={ffc}
+        // onClick={()=>ffc(id)}
         >
           <Tab eventKey="home" title="منوی اصلی" style={{ background: 'inherit' }}>
 
@@ -50,5 +60,10 @@ export default function CmsMenu() {
 
 
     </div>
+</MainMenuContext.Provider>
+
+
+
+
   )
 }
