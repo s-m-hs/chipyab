@@ -23,6 +23,11 @@
 .mainmenu-editbut{
     margin: 2px;
 }
+
+.mainmenu-addbut{
+    margin: 2px;
+
+}
 .modal-content{
     direction: rtl;
 }

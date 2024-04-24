@@ -23,7 +23,7 @@ export default function CmsIndex() {
   const [flag4, setFlag4] = useState('')
   const [flag5, setFlag5] = useState('')
   const [flag6, setFlag6] = useState('')
-
+const [arrayIdParam,setArrayIdParam]=useState([])
 
 
 
@@ -38,6 +38,7 @@ export default function CmsIndex() {
 
     <>
       <CmsContext.Provider value={{
+        arrayIdParam,setArrayIdParam,
         isValid,setIsValid,
         flagResetInput,setFlagResetInput,
        sideMenueFlag,setSideMenueFlag,

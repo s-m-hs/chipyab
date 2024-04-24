@@ -1,14 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react'
 import './MainMenu.css'
+import { Link,useParams } from 'react-router-dom';
 import Input1 from '../../InputComponent/Input1/Input1'
 import SendIcon from '@mui/icons-material/Send';
 import Button from '@mui/material/Button';
 import {MenuContext} from '../../../context/CmsMaimMenuContext';
 import {MainMenuContext} from '../../../context/CmsMaimMenuContext';
+import { CmsContext } from '../../../context/CmsContext';
 import { requiedValidator, minValidator } from '../../../Validators/rules'
 import DataTable from '../DataTable/DataTable';
 import Swal from 'sweetalert2'
 import Modal from 'react-bootstrap/Modal';
+
 
 export default function MainMenu() {
   const [value1, setValue1] = useState('')
@@ -23,14 +26,16 @@ export default function MainMenu() {
   const [putValue3, setPutValue3] = useState('')
   const [putId, setPutId] = useState('')
 
-  const mainMenuContext = useContext(MainMenuContext)
+// const param=useParams()
 
+  const mainMenuContext = useContext(MainMenuContext)
+  const cmsContext = useContext(CmsContext)
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setShow(true);
-    // cmsContext.setFlagResetInput(true)
+    cmsContext.setFlagResetInput(prev=>!prev)
   }
   //////////////////////
   const changeInputHandlerA = (e) => {
@@ -173,8 +178,8 @@ export default function MainMenu() {
             timer: 1500,
           });
           registerGet()
-          mainMenuContext.setFlagResetInput(prev=>!prev)
-         }
+          cmsContext.setFlagResetInput(prev=>!prev)
+        }
       })
     }
     myAppPost()
@@ -285,6 +290,9 @@ export default function MainMenu() {
                     <td>{item.imageUrl}</td>
                     <td>{item.id}</td>
                     <td>
+                      <Link to={`${item.id}`}>
+                                                    <button className='btn btn-primary mainmenu-addbut'
+                                                    >گروه جدید</button></Link>
                       <button className='btn btn-info mainmenu-editbut' onClick={() => editHandler(item.id, item.text, item.nameCode, item.imageUrl)} >ویرایش</button>
                       <button className='btn btn-danger mainmenu-deletbut' onClick={() => deletHandler(item.id)} >حذف</button>
                     </td>

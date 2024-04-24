@@ -3,6 +3,7 @@ import './Input1.css'
 import validator from '../../../Validators/validator';
 import { MenuContext } from '../../../context/CmsMaimMenuContext'
 import { ItemContext } from '../../../context/CmsMaimMenuContext'
+import { CmsContext } from '../../../context/CmsContext';
 import {MainMenuContext} from '../../../context/CmsMaimMenuContext';
 
 
@@ -23,6 +24,7 @@ export default function InputComponent(props) {
     const menuContext = useContext(MenuContext)
     const itemContext = useContext(ItemContext)
     const mainMenuContext = useContext(MainMenuContext)
+    const cmsContext = useContext(CmsContext)
 
     function changeHandler(e) {
         dispatch2({
@@ -68,7 +70,8 @@ useEffect(()=>{
         value: '',
         validPropIn: props.validPropTo,
     })},
-    [mainMenuContext.flagResetInput]
+
+    [cmsContext.flagResetInput]
 ) 
 
 
